@@ -1,0 +1,61 @@
+{
+    topic_types: [
+        { # a counter to show some interactions
+            value: "Example Counter",
+            uri: "dm4.example.count",
+            data_type_uri: "dm4.core.number"
+        },
+        { # the example content aggregates with individual UI presentation
+            value: "Example Content",
+            uri: "dm4.example.content",
+            data_type_uri: "dm4.core.text",
+            index_mode_uris: ["dm4.core.fulltext"],
+            view_config_topics: [
+                {
+                    type_uri: "dm4.webclient.view_config",
+                    composite: {
+                        dm4.webclient.js_field_renderer_class: "ExampleContentFieldRenderer",
+                        dm4.webclient.js_page_renderer_class: "ExampleContentPageRenderer"
+                    }
+                }
+            ]
+        },
+        { # declaration of a composite type with a name and some content nodes
+            value: "Example",
+            uri: "dm4.example.type",
+            data_type_uri: "dm4.core.composite",
+            assoc_defs: [
+                {
+                    part_topic_type_uri:   "dm4.example.name",
+                    part_cardinality_uri:  "dm4.core.one",
+                    assoc_type_uri:        "dm4.core.composition_def"
+                },
+                {
+                    part_topic_type_uri:   "dm4.example.count",
+                    part_cardinality_uri:  "dm4.core.one",
+                    assoc_type_uri:        "dm4.core.composition_def"
+                },
+                {
+                    part_topic_type_uri:   "dm4.example.content",
+                    whole_cardinality_uri: "dm4.core.one",
+                    part_cardinality_uri:  "dm4.core.many",
+                    assoc_type_uri:        "dm4.core.aggregation_def"
+                }
+            ],
+            label_config: [ # configure the label concatenation
+                "dm4.example.name",
+                "dm4.example.count"
+            ],
+            view_config_topics: [
+                { # configure the web client integration
+                    type_uri: "dm4.webclient.view_config",
+                    composite: {
+                        dm4.webclient.icon: "/de.deepamehta.dm4-example/images/icon.png",
+                        dm4.webclient.add_to_create_menu: true,
+                        dm4.webclient.is_searchable_unit: true
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,2 @@
+/* prepend the icon */
+.example:before { content:url(../images/icon.png)" "; }

@@ -1,0 +1,37 @@
+{
+    topic_types: [ # -------------------------------- create types
+        {
+            value: "Example Name",
+            uri: "dm4.example.name",
+            data_type_uri: "dm4.core.text",
+            index_mode_uris: ["dm4.core.fulltext"],
+        }
+    ],
+    assoc_types: [ # -------------------- create association types
+        {
+            value: "Example Association",
+            uri: "dm4.example.association",
+            data_type_uri: "dm4.core.text"
+        }
+    ],
+    topics: [ # --------------------------- create topic instances
+        {
+            value: "An example",
+            type_uri: "dm4.example.name",
+            uri: "dm4.example.topic.name"
+        }
+    ],
+    associations: [ # --------------------------- associate topics
+        {
+            type_uri: "dm4.example.association",
+            role_1: {
+                topic_uri: "de.deepamehta.dm4-example",
+                role_type_uri: "dm4.core.default"
+            },
+            role_2: {
+                topic_uri: "dm4.example.topic.name",
+                role_type_uri: "dm4.core.default"
+            }
+        }
+    ]
+}
