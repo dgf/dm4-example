@@ -6,7 +6,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
+import de.deepamehta.core.model.TopicModel;
+import de.deepamehta.core.service.ClientState;
 import de.deepamehta.core.service.Plugin;
 
 @Path("/example")
@@ -15,13 +18,26 @@ public class ExamplePlugin extends Plugin implements ExampleService {
 
     private Logger log = Logger.getLogger(getClass().getName());
 
+    @Override
+    public void preCreateHook(TopicModel model, ClientState clientState) {
+        log.info("init example count of " + model.getId());
+        try {
+            model.getCompositeValue().put("dm4.example.count", 0);
+        } catch (Exception e) {
+            log.warning("something went wrong");
+        }
+    }
+
     @GET
     @Path("/increase/{id}")
     @Override
     public Example increase(@PathParam("id") long id) {
         log.info("increase " + id);
-        return new Example(id, dms).increase();
+        try {
+            return new Example(id, dms).increase();
+        } catch (Exception e) {
+            throw new WebApplicationException(new RuntimeException("something went wrong", e));
+        }
     }
-
 
 }
