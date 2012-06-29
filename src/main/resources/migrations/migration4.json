@@ -4,6 +4,7 @@
             type_uri: "dm4.example.type",
             uri: "dm4.example.topic",
             composite: {
+                dm4.example.count: 3,
                 dm4.example.content: [ "an example note" ]
             }
         },
@@ -11,6 +12,7 @@
             type_uri: "dm4.example.type",
             composite: {
                 dm4.example.name: "Another example",
+                dm4.example.count: 4,
                 dm4.example.content: [
                     "an example with more than one note",
                     "the second note"
