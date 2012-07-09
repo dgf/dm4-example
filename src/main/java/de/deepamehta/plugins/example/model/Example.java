@@ -29,7 +29,8 @@ public class Example implements JSONEnabled {
     }
 
     /**
-     * Creates a new <code>Example</code> topic from <code>ExampleTopic</code> model.
+     * Creates a new <code>Example</code> topic from <code>ExampleTopic</code>
+     * model.
      */
     public Example(ExampleTopic model, DeepaMehtaService dms, ClientState clientState) {
         topic = dms.createTopic(model, clientState);
@@ -52,6 +53,11 @@ public class Example implements JSONEnabled {
     @Override
     public JSONObject toJSON() {
         return topic.toJSON();
+    }
+
+    @Override
+    public String toString() {
+        return topic.toString();
     }
 
     // ------------------------------ simplified composite access
