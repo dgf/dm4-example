@@ -9,20 +9,18 @@ dm4c.add_plugin('de.deepamehta.example', function() {
     function createAnotherExample() {
         var name = prompt('Example name', 'Another Example')
             topic = dm4c.restc.request('POST', '/example/create', { name: name })
-        dm4c.canvas.add_topic(topic, true)
-        dm4c.do_select_topic(topic.id)
+        dm4c.show_topic(topic, 'show', null, true)
     }
 
     // calls the server side increase method of the selected Example topic
     function increaseExample() {
         var url = '/example/increase/' + dm4c.selected_object.id,
             topic = dm4c.restc.request('GET', url)
-        dm4c.canvas.update_topic(topic, true)
-        dm4c.do_select_topic(topic.id)
+        dm4c.show_topic(topic, 'show', null, true)
     }
 
     // define type specific commands and register them 
-    dm4c.register_listener('topic_commands', function (topic) {
+    dm4c.add_listener('topic_commands', function (topic) {
         return topic.type_uri !== 'dm4.example.type' ? [] : [{
             context: ['context-menu', 'detail-panel-show'],
             label: 'Increase me!', handler: increaseExample
@@ -30,7 +28,7 @@ dm4c.add_plugin('de.deepamehta.example', function() {
     })
 
     // register an additional create command
-    dm4c.register_listener("post_refresh_create_menu", function(type_menu) {
+    dm4c.add_listener("post_refresh_create_menu", function(type_menu) {
         type_menu.add_separator()
         type_menu.add_item({ label: "New Example", handler: createAnotherExample })
     })
