@@ -11,15 +11,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 
 import de.deepamehta.core.model.TopicModel;
+import de.deepamehta.core.osgi.PluginActivator;
 import de.deepamehta.core.service.ClientState;
-import de.deepamehta.core.service.Plugin;
+import de.deepamehta.core.service.listener.PreCreateTopicListener;
 import de.deepamehta.plugins.example.model.Example;
 import de.deepamehta.plugins.example.model.ExampleTopic;
 import de.deepamehta.plugins.example.service.ExampleService;
 
 @Path("/example")
 @Produces("application/json")
-public class ExamplePlugin extends Plugin implements ExampleService {
+public class ExamplePlugin extends PluginActivator implements ExampleService,
+        PreCreateTopicListener {
 
     private Logger log = Logger.getLogger(getClass().getName());
 
@@ -28,17 +30,16 @@ public class ExamplePlugin extends Plugin implements ExampleService {
      * <code>TopicModel</code> to zero.
      */
     @Override
-    public void preCreateHook(TopicModel model, ClientState clientState) {
-        if (model.getTypeUri().equals(ExampleTopic.TYPE)) {
-            log.info("init Example count of "
-                    + model.getCompositeValue().getString(ExampleTopic.NAME));
-            model.getCompositeValue().put(ExampleTopic.COUNT, 0);
+    public void preCreateTopic(TopicModel model, ClientState clientState) {
+        if (model.getTypeUri().equals(ExampleTopic.COUNT)) {
+            log.info("init Example count");
+            model.setSimpleValue(0);
         }
     }
 
     /**
-     * Creates a new <code>Example</code> instance based on
-     * <code>ExampleTopic</code> model.
+     * Creates a new <code>Example</code> instance based on the domain specific
+     * REST call with a alternate JSON topic representation.
      */
     @POST
     @Path("/create")
