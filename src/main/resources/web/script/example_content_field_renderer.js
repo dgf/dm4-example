@@ -1,17 +1,16 @@
 // a simple field renderer that renders an example topic name with an additional CSS class
-function ExampleContentFieldRenderer(field_model) {
-    this.field_model = field_model
-}
+dm4c.add_field_renderer("dm4.example.content_field_renderer", {
 
-ExampleContentFieldRenderer.prototype.render_field = function(parent_element) {
-    dm4c.render.field_label(this.field_model, parent_element)
-    parent_element.append($("<span>").addClass('example').text(this.field_model.value))
-}
+    render_field: function(field_model, parent_element) {
+        dm4c.render.field_label(field_model, parent_element)
+        parent_element.append($("<span>").addClass('example').text(field_model.value))
+    },
 
-ExampleContentFieldRenderer.prototype.render_form_element = function(parent_element) {
-    var $content = dm4c.render.input(this.field_model)
-    parent_element.append($content)
-    return function() {
-        return $.trim($content.val())
+    render_form_element: function(field_model, parent_element) {
+        var $content = dm4c.render.input(field_model)
+        parent_element.append($content)
+        return function() { // return input value
+            return $.trim($content.val())
+        }
     }
-}
+})

@@ -1,4 +1,4 @@
-dm4c.add_plugin('de.deepamehta.example', function() {
+dm4c.add_plugin('dm4.example.plugin', function() {
 
     // load some renderer and a style sheet
     dm4c.load_field_renderer('/de.deepamehta.dm4-example/script/example_content_field_renderer.js')
@@ -9,14 +9,14 @@ dm4c.add_plugin('de.deepamehta.example', function() {
     function createAnotherExample() {
         var name = prompt('Example name', 'Another Example')
             topic = dm4c.restc.request('POST', '/example/create', { name: name })
-        dm4c.show_topic(topic, 'show', null, true)
+        dm4c.show_topic(new Topic(topic), 'show', null, true)
     }
 
     // calls the server side increase method of the selected Example topic
     function increaseExample() {
         var url = '/example/increase/' + dm4c.selected_object.id,
             topic = dm4c.restc.request('GET', url)
-        dm4c.show_topic(topic, 'show', null, true)
+        dm4c.show_topic(new Topic(topic), 'show', null, true)
     }
 
     // define type specific commands and register them 
