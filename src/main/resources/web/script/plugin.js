@@ -3,7 +3,6 @@ dm4c.add_plugin('dm4.example.plugin', function() {
     // load some renderer and a style sheet
     dm4c.load_field_renderer('/de.deepamehta.dm4-example/script/example_content_field_renderer.js')
     dm4c.load_page_renderer('/de.deepamehta.dm4-example/script/example_content_page_renderer.js')
-    dm4c.load_stylesheet('/de.deepamehta.dm4-example/style/screen.css')
 
     // calls the alternative REST creation method with customized JSON format
     function createAnotherExample() {
