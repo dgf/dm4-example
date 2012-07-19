@@ -1,5 +1,5 @@
 // a page render that simply renders the value of an example content topic instance
-dm4c.add_page_renderer("dm4.example.content_page_renderer", {
+dm4c.add_page_renderer('dm4.example.content_page_renderer', {
 
     render_page: function(topic) {
         dm4c.render.field_label('Content')
