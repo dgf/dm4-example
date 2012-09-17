@@ -2,7 +2,7 @@ dm4c.add_plugin('dm4.example.plugin', function() {
 
     // calls the alternative REST creation method with customized JSON format
     function createAnotherExample() {
-        var name = prompt('Example name', 'Another Example')
+        var name = prompt('Example name', 'Another Example'),
             topic = dm4c.restc.request('POST', '/example/create', { name: name })
         dm4c.show_topic(new Topic(topic), 'show', null, true)
     }
@@ -14,17 +14,23 @@ dm4c.add_plugin('dm4.example.plugin', function() {
         dm4c.show_topic(new Topic(topic), 'show', null, true)
     }
 
-    // define type specific commands and register them 
+    // define type specific commands and register them
     dm4c.add_listener('topic_commands', function (topic) {
         return topic.type_uri !== 'dm4.example.type' ? [] : [{
             context: ['context-menu', 'detail-panel-show'],
-            label: 'Increase me!', handler: increaseExample
+            label: 'Increase me!',
+            handler: increaseExample
         }]
     })
 
     // register an additional create command
-    dm4c.add_listener("post_refresh_create_menu", function(type_menu) {
-        type_menu.add_separator()
-        type_menu.add_item({ label: "New Example", handler: createAnotherExample })
+    dm4c.add_listener('post_refresh_create_menu', function(type_menu) {
+        if (dm4c.has_create_permission('dm4.example.type')) {
+            type_menu.add_separator()
+            type_menu.add_item({
+              label: 'New Example',
+              handler: createAnotherExample
+            })
+        }
     })
 })
