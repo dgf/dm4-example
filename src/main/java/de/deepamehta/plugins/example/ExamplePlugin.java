@@ -9,17 +9,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.osgi.PluginActivator;
 import de.deepamehta.core.service.ClientState;
-import de.deepamehta.core.service.listener.PreCreateTopicListener;
+import de.deepamehta.core.service.event.PreCreateTopicListener;
 import de.deepamehta.plugins.example.model.Example;
 import de.deepamehta.plugins.example.model.ExampleTopic;
 import de.deepamehta.plugins.example.service.ExampleService;
 
 @Path("/example")
-@Produces("application/json")
+@Produces(MediaType.APPLICATION_JSON)
 public class ExamplePlugin extends PluginActivator implements ExampleService,
         PreCreateTopicListener {
 
