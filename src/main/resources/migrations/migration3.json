@@ -5,7 +5,7 @@
             uri: "dm4.example.count",
             data_type_uri: "dm4.core.number"
         },
-        { # the example content aggregates with individual UI presentation
+        { # the example content aggregates with individual page presentation
             value: "Example Content",
             uri: "dm4.example.content",
             data_type_uri: "dm4.core.text",
@@ -14,13 +14,12 @@
                 {
                     type_uri: "dm4.webclient.view_config",
                     composite: {
-                        dm4.webclient.simple_renderer_uri: "dm4.example.content_field_renderer",
                         dm4.webclient.page_renderer_uri: "dm4.example.content_page_renderer"
                     }
                 }
             ]
         },
-        { # declaration of a composite type with a name and some content nodes
+        { # declaration of a composite type with a name and some content aggregates
             value: "Example",
             uri: "dm4.example.type",
             data_type_uri: "dm4.core.composite",
@@ -28,7 +27,15 @@
                 {
                     part_topic_type_uri:   "dm4.example.name",
                     part_cardinality_uri:  "dm4.core.one",
-                    assoc_type_uri:        "dm4.core.composition_def"
+                    assoc_type_uri:        "dm4.core.composition_def",
+                    view_config_topics: [
+                        {
+                            type_uri: "dm4.webclient.view_config",
+                            composite: {
+                                dm4.webclient.simple_renderer_uri: "dm4.example.name_simple_renderer"
+                            }
+                        }
+                    ]
                 },
                 {
                     part_topic_type_uri:   "dm4.example.count",
@@ -39,7 +46,15 @@
                     part_topic_type_uri:   "dm4.example.content",
                     whole_cardinality_uri: "dm4.core.one",
                     part_cardinality_uri:  "dm4.core.many",
-                    assoc_type_uri:        "dm4.core.aggregation_def"
+                    assoc_type_uri:        "dm4.core.aggregation_def",
+                    view_config_topics: [
+                        {
+                            type_uri: "dm4.webclient.view_config",
+                            composite: {
+                                dm4.webclient.multi_renderer_uri: "dm4.example.content_multi_renderer"
+                            }
+                        }
+                    ]
                 }
             ],
             label_config: [ # configure the label concatenation
