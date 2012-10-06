@@ -1,5 +1,7 @@
 package de.deepamehta.plugins.example;
 
+import static de.deepamehta.plugins.example.model.ExampleTopic.*;
+
 import java.util.logging.Logger;
 
 import javax.ws.rs.GET;
@@ -11,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import de.deepamehta.core.Topic;
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.osgi.PluginActivator;
 import de.deepamehta.core.service.ClientState;
@@ -32,9 +35,9 @@ public class ExamplePlugin extends PluginActivator implements ExampleService,
      */
     @Override
     public void preCreateTopic(TopicModel model, ClientState clientState) {
-        if (model.getTypeUri().equals(ExampleTopic.COUNT)) {
+        if (model.getTypeUri().equals(ExampleTopic.TYPE)) {
             log.info("init Example count");
-            model.setSimpleValue(0);
+            model.getCompositeValue().put(COUNT, 0);
         }
     }
 
@@ -45,10 +48,10 @@ public class ExamplePlugin extends PluginActivator implements ExampleService,
     @POST
     @Path("/create")
     @Override
-    public Example create(ExampleTopic topic, @HeaderParam("Cookie") ClientState clientState) {
+    public Topic create(ExampleTopic topic, @HeaderParam("Cookie") ClientState clientState) {
         log.info("create Example " + topic);
         try {
-            return new Example(topic, dms, clientState);
+            return new Example(topic, dms, clientState).getTopic();
         } catch (Exception e) {
             throw new WebApplicationException(new RuntimeException("something went wrong", e));
         }
@@ -60,7 +63,7 @@ public class ExamplePlugin extends PluginActivator implements ExampleService,
     @GET
     @Path("/increase/{id}")
     @Override
-    public Example increase(@PathParam("id") long id, @HeaderParam("Cookie") ClientState clientState) {
+    public Topic increase(@PathParam("id") long id, @HeaderParam("Cookie") ClientState clientState) {
         log.info("increase Example " + id);
         try {
             return new Example(id, dms, clientState).increase();

@@ -42,12 +42,12 @@ public class Example implements JSONEnabled {
      * 
      * @return this
      */
-    public Example increase() {
+    public Topic increase() {
         DeepaMehtaTransaction tx = dms.beginTx();
         topic.setChildTopicValue(COUNT, new SimpleValue(getCount() + 1));
         tx.success();
         tx.finish();
-        return this;
+        return topic;
     }
 
     @Override
@@ -58,6 +58,10 @@ public class Example implements JSONEnabled {
     @Override
     public String toString() {
         return topic.toString();
+    }
+
+    public Topic getTopic() {
+        return topic;
     }
 
     // ------------------------------ simplified composite access
