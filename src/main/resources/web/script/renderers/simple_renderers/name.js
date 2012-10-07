@@ -3,7 +3,7 @@ dm4c.add_simple_renderer('dm4.example.name_simple_renderer', {
 
     render_info: function(model, $parent) {
         dm4c.render.field_label(model, $parent)
-        $parent.append($("<span>").addClass('example').text(model.value))
+        $parent.append($('<span>').addClass('example').text(model.value))
     },
 
     render_form: function(model, $parent) {

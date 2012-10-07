@@ -3,13 +3,13 @@ dm4c.add_plugin('dm4.example.plugin', function() {
     // calls the alternative REST creation method with customized JSON format
     function createAnotherExample() {
         var name = prompt('Example name', 'Another Example'),
-            topic = dm4c.restc.request('POST', '/example/create', { name: name })
+            topic = dm4c.restc.request('POST', 'example/create', { name: name })
         dm4c.show_topic(new Topic(topic), 'show')
     }
 
     // calls the server side increase method of the selected Example topic
     function increaseExample() {
-        var url = '/example/increase/' + dm4c.selected_object.id,
+        var url = 'example/increase/' + dm4c.selected_object.id,
             topic = dm4c.restc.request('GET', url)
         dm4c.show_topic(new Topic(topic), 'show')
     }
