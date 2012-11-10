@@ -13,6 +13,6 @@ public class Migration2 extends Migration {
         dms.getTopicType("dm4.webclient.search", null)
                 .getViewConfig()
                 .addSetting("dm4.webclient.view_config", "dm4.webclient.icon",
-                        "de.deepamehta.dm4-example/images/bucket.png");
+                        "/de.deepamehta.dm4-example/images/bucket.png");
     }
 }
